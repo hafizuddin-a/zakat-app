@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zakat Calculator (SGD)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            max-width: 400px;
+            width: 100%;
+        }
+        input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .result, .nisab-info {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Zakat Calculator (SGD)</h1>
+<form id="zakatForm">
+    <label for="lowestSavings">Lowest Savings in the Year (in SGD):</label><br>
+    <input type="number" id="lowestSavings" name="lowestSavings" required><br>
+    <label for="interest">Interest Gained (in SGD):</label><br>
+    <input type="number" id="interest" name="interest" required><br>
+    <label for="nisab">Current Nisab Threshold (in SGD):</label><br>
+    <input type="number" id="nisab" name="nisab" required><br>
+    <input type="submit" value="Calculate Zakat">
+</form>
+
+<div class="nisab-info" id="nisabInfo"></div>
+<div class="result" id="result"></div>
+
+<script>
+    document.getElementById('zakatForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        var lowestSavings = parseFloat(document.getElementById('lowestSavings').value);
+        var interest = parseFloat(document.getElementById('interest').value);
+        var nisab = parseFloat(document.getElementById('nisab').value);
+        var zakatableAmount = lowestSavings - interest;
+        var zakat = zakatableAmount * 0.025;
+
+        var nisabInfo = 'Current Nisab Threshold: SGD ' + nisab.toFixed(2);
+        var resultText = '';
+
+        if (zakatableAmount >= nisab) {
+            resultText = 'Your Zakat is: SGD ' + zakat.toFixed(2);
+        } else {
+            resultText = 'Your savings do not meet the Nisab threshold, no Zakat is due.';
+        }
+
+        document.getElementById('nisabInfo').innerHTML = nisabInfo;
+        document.getElementById('result').innerHTML = resultText;
+    });
+</script>
+
+</body>
+</html>
